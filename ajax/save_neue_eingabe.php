@@ -1,5 +1,5 @@
 <?php
-ini_set('display;_errors', 'On');
+ini_set('display_errors', 'On');
 error_reporting(E_ALL); # & ~E_NOTICE & ~E_WARNING);
 
 require_once '../connect.php';
@@ -42,14 +42,16 @@ $betrag = str_replace(',', '.', $betrag);
 $query = "INSERT INTO `consumption` (`id`, `vehicle_id`, `datum`, `kmStand`, `liter`, `preis`, `bemerkung`) 
               VALUES ('', '$vehicle_id', '$datum', '$km_stand', '$liter', '$betrag', '$bemerkung');";
 
-// echo $query."<hr>";
+// die($query);
 
 $send = mysqli_query($link, $query);
 if (!$send) {
-    die('Fehler beim Ausführen der Abfrage: ' . mysqli_error($link));
+    echo 'Fehler beim Ausführen der Abfrage: ' . mysqli_error($link);
 } else {
-    echo 'Die Abfrage wurde erfolgreich ausgeführt!';
+    header('Location: ../liste.php');
 }
+
+
 // $stmt = $link->prepare("INSERT INTO consumption (vehicle_id, datum, kmStand, liter, preis, bemerkung) VALUES (?, ?, ?, ?, ?, ?)");
 // $stmt->bind_param("isidss", $vehicle_id, $datum, $km_stand, $liter, $betrag, $bemerkung);
 

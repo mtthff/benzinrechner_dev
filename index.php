@@ -49,7 +49,7 @@
                 </div>
                 <div class="input-group mt-4 mb-3">
                     <span class="input-group-text" id="text">Bemerkung</span>
-                    <input type="text" class="form-control" name="bemerkung" placeholder="Bemerkung" aria-label="bemerkung" aria-describedby="basic-addon1" required>
+                    <input type="text" class="form-control" name="bemerkung" placeholder="Bemerkung" aria-label="bemerkung" aria-describedby="basic-addon1">
                 </div>
 
                 <button type="reset" class="btn btn-md btn-primary mt-5" href="#" role="button">abbrechen</button>

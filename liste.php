@@ -1,3 +1,48 @@
+<?php
+ini_set('display_errors', 'On');
+error_reporting(E_ALL); # & ~E_NOTICE & ~E_WARNING);
+
+require_once 'connect.php';
+$sql = "SELECT * FROM consumption ORDER BY datum ASC";
+$result = mysqli_query($link, $sql);
+
+$data[] = array(
+    'id' => '',
+    'datum' => '',
+    'kmStand' => 0,
+    'liter' => '',
+    'preis' => '',
+    'literPreis' => '',
+    'gefahreneKm' => 1,
+    'verbrauch' => '',
+    'bemerkung' => ''
+);
+$lastKey = array_key_last($data);
+// echo "<pre>";
+// print_r($data);
+// echo $lastKey;
+// exit;
+
+while ($row = mysqli_fetch_assoc($result)) {
+    $data[] = array(
+        'id' => $row['id'],
+        'datum' => $row['datum'],
+        'kmStand' => $row['kmStand'],
+        'liter' => $row['liter'],
+        'preis' => $row['preis'],
+        'literPreis' => round($row['preis'] / $row['liter'], 2),
+        'gefahreneKm' => $row['kmStand'] - $data[$lastKey]['kmStand'],
+        'verbrauch' => round($row['liter'] / (($row['kmStand'] - $data[$lastKey]['kmStand']) / 100), 2),
+        'bemerkung' => $row['bemerkung']
+    );
+    $lastKey = array_key_last($data);
+}
+array_shift($data);
+// echo "<pre>";
+// print_r($data);
+// exit;
+
+?>
 <!doctype html>
 <html lang="de" data-bs-theme="auto">
 
@@ -11,11 +56,6 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
     <!-- <meta name="theme-color" content="#712cf9"> -->
-    <style>
-        .hiddenRow {
-            padding: 0 !important;
-        }
-    </style>
 
 </head>
 
@@ -41,27 +81,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">30.5.</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2.6.</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-
+                        <?php
+                        foreach ($data as $key => $value) {
+                        ?>
+                            <tr>
+                                <th scope="row"><?php echo $value['datum'] ?></th>
+                                <td><?php echo $value['kmStand'] ?></td>
+                                <td><?php echo $value['liter'] ?></td>
+                                <td><?php echo $value['preis'] ?> €</td>
+                                <td><?php echo $value['literPreis'] ?> €</td>
+                                <td><?php echo $value['gefahreneKm'] ?> km</td>
+                                <td><?php echo $value['verbrauch'] ?> l</td>
+                                <td><?php echo $value['bemerkung'] ?></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
