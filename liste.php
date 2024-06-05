@@ -3,13 +3,27 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL); # & ~E_NOTICE & ~E_WARNING);
 
 require_once 'connect.php';
+
+$sqlVehicle = 'SELECT * FROM `vehicle` ORDER BY datum ASC';
+$resultVehicle = mysqli_query($link, $sqlVehicle);
+$dataVehicle = mysqli_fetch_assoc($resultVehicle);
+// echo "<pre>";
+// print_r($dataVehicle);
+// exit;
+//     [id] => 1
+//     [name] => Zafira
+//     [kennzeichen] => S-RF 2822
+//     [kmStand] => 143874
+//     [datum] => 2019-04-12
+
+
 $sql = "SELECT * FROM consumption ORDER BY datum ASC";
 $result = mysqli_query($link, $sql);
 
-$data[] = array(
+$dataConsumption[] = array(
     'id' => '',
     'datum' => '',
-    'kmStand' => 0,
+    'kmStand' => $dataVehicle['kmStand'],
     'liter' => '',
     'preis' => '',
     'literPreis' => '',
@@ -17,29 +31,29 @@ $data[] = array(
     'verbrauch' => '',
     'bemerkung' => ''
 );
-$lastKey = array_key_last($data);
-// echo "<pre>";
-// print_r($data);
-// echo $lastKey;
-// exit;
+$lastKey = array_key_last($dataConsumption);
 
 while ($row = mysqli_fetch_assoc($result)) {
-    $data[] = array(
+    $dataConsumption[] = array(
         'id' => $row['id'],
         'datum' => $row['datum'],
         'kmStand' => $row['kmStand'],
         'liter' => $row['liter'],
         'preis' => $row['preis'],
         'literPreis' => round($row['preis'] / $row['liter'], 2),
-        'gefahreneKm' => $row['kmStand'] - $data[$lastKey]['kmStand'],
-        'verbrauch' => round($row['liter'] / (($row['kmStand'] - $data[$lastKey]['kmStand']) / 100), 2),
+        'gefahreneKm' => $row['kmStand'] - $dataConsumption[$lastKey]['kmStand'],
+        'verbrauch' => round($row['liter'] / (($row['kmStand'] - $dataConsumption[$lastKey]['kmStand']) / 100), 2),
         'bemerkung' => $row['bemerkung']
     );
-    $lastKey = array_key_last($data);
+    $lastKey = array_key_last($dataConsumption);
+    if ($dataConsumption[$lastKey]['gefahreneKm'] > 1000 OR $dataConsumption[$lastKey]['gefahreneKm'] < 0) {
+        $dataConsumption[$lastKey]['gefahreneKm'] = '-';
+        $dataConsumption[$lastKey]['verbrauch'] = '-';
+    }
 }
-array_shift($data);
+array_shift($dataConsumption);
 // echo "<pre>";
-// print_r($data);
+// print_r($dataConsumption);
 // exit;
 
 ?>
@@ -82,16 +96,17 @@ array_shift($data);
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($data as $key => $value) {
+                        foreach ($dataConsumption as $key => $value) {
                         ?>
                             <tr>
-                                <th scope="row"><?php echo $value['datum'] ?></th>
-                                <td><?php echo $value['kmStand'] ?></td>
-                                <td><?php echo $value['liter'] ?></td>
-                                <td><?php echo $value['preis'] ?> €</td>
-                                <td><?php echo $value['literPreis'] ?> €</td>
-                                <td><?php echo $value['gefahreneKm'] ?> km</td>
-                                <td><?php echo $value['verbrauch'] ?> l</td>
+                                <th scope="row"><?php echo date('d.m.y', strtotime($value['datum'])) ?></th>
+                                <!-- <th scope="row"><?php echo $value['datum'] ?></th> -->
+                                <td><?php echo number_format($value['kmStand'], 0, ',', '.') ?> km</td>
+                                <td><?php echo str_replace('.', ',', $value['liter']) ?> l</td>
+                                <td><?php echo str_replace('.', ',', $value['preis']) ?> €</td>
+                                <td><?php echo str_replace('.', ',', $value['literPreis']) ?> €</td>
+                                <td><?php echo ($value['gefahreneKm'] != '-') ? $value['gefahreneKm'].' km' : '-' ?></td>
+                                <td><?php echo ($value['verbrauch'] != '-') ? $value['verbrauch'].' l' : '-' ?></td>
                                 <td><?php echo $value['bemerkung'] ?></td>
                             </tr>
                         <?php
