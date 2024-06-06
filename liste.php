@@ -46,7 +46,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         'bemerkung' => $row['bemerkung']
     );
     $lastKey = array_key_last($dataConsumption);
-    if ($dataConsumption[$lastKey]['gefahreneKm'] > 1000 OR $dataConsumption[$lastKey]['gefahreneKm'] < 0) {
+    if ($dataConsumption[$lastKey]['gefahreneKm'] > 1000 or $dataConsumption[$lastKey]['gefahreneKm'] < 0) {
         $dataConsumption[$lastKey]['gefahreneKm'] = '-';
         $dataConsumption[$lastKey]['verbrauch'] = '-';
     }
@@ -75,6 +75,7 @@ array_shift($dataConsumption);
 
 <body>
 
+    <!-- Tabelle -->
     <main class="container">
         <div class="bg-body-tertiary p-3 rounded mt-3 mb-5">
             <div class="my-3 row">
@@ -92,24 +93,29 @@ array_shift($dataConsumption);
                             <th scope="col">gefahrene km</th>
                             <th scope="col">Verbrauch</th>
                             <th scope="col">Bemerkung</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($dataConsumption as $key => $value) {
+                        end($dataConsumption); // Setzt den Zeiger auf das letzte Element des Arrays
+                        while (key($dataConsumption) !== null) {
+                            $key = key($dataConsumption);
+                            $value = current($dataConsumption);
                         ?>
                             <tr>
                                 <th scope="row"><?php echo date('d.m.y', strtotime($value['datum'])) ?></th>
-                                <!-- <th scope="row"><?php echo $value['datum'] ?></th> -->
                                 <td><?php echo number_format($value['kmStand'], 0, ',', '.') ?> km</td>
                                 <td><?php echo str_replace('.', ',', $value['liter']) ?> l</td>
                                 <td><?php echo str_replace('.', ',', $value['preis']) ?> €</td>
                                 <td><?php echo str_replace('.', ',', $value['literPreis']) ?> €</td>
-                                <td><?php echo ($value['gefahreneKm'] != '-') ? $value['gefahreneKm'].' km' : '-' ?></td>
-                                <td><?php echo ($value['verbrauch'] != '-') ? $value['verbrauch'].' l' : '-' ?></td>
+                                <td><?php echo ($value['gefahreneKm'] != '-') ? $value['gefahreneKm'] . ' km' : '-' ?></td>
+                                <td><?php echo ($value['verbrauch'] != '-') ? $value['verbrauch'] . ' l' : '-' ?></td>
                                 <td><?php echo $value['bemerkung'] ?></td>
+                                <td><img class="editEintrag" data-id="<?php echo $value['id'] ?>" src="assets/img/rule_settings_24dp.svg" alt="edit"></td>
                             </tr>
                         <?php
+                            prev($dataConsumption); // Bewegt den Zeiger auf das vorherige Element
                         }
                         ?>
                     </tbody>
@@ -118,6 +124,49 @@ array_shift($dataConsumption);
         </div>
     </main>
 
+    <!-- Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editModalLabel">Eintrage bearbeiten</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="ajax/save_edit_eintrag.php" method="post">
+                    <input type="hidden" name="id" id="id">
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Datum</span>
+                            <input type="date" class="form-control" name="datum" id="datum" aria-label="datum" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">km-Stand</span>
+                            <input type="number" class="form-control" name="kmStand" id="kmStand" aria-label="kmStand" step="0.01" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Liter</span>
+                            <input type="number" class="form-control" name="liter" id="liter" aria-label="liter" step="0.01" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">€</span>
+                            <input type="number" class="form-control" name="preis" id="preis" aria-label="preis" step="0.01" required>
+                        </div>
+                        <div class="input-group mt-4 mb-3">
+                            <span class="input-group-text">Bemerkung</span>
+                            <input type="text" class="form-control" name="bemerkung" id="bemerkung" placeholder="Bemerkung" aria-label="bemerkung" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Änderungen speichern</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Navigation -->
     <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-dark">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,7 +194,6 @@ array_shift($dataConsumption);
             </div>
         </div>
     </nav>
-
 
     <script src="assets/js/frameworks/bootstrap.min.js"></script>
     <script src="assets/js/liste.js"></script>
