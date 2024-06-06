@@ -1,3 +1,5 @@
+"use strict";
+
 let editIcon = document.querySelectorAll('.editEintrag');
 editIcon.forEach(function (element) {
     element.addEventListener('click', async function () {
