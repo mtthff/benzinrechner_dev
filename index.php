@@ -51,27 +51,28 @@
                     <span class="input-group-text" id="text">Bemerkung</span>
                     <input type="text" class="form-control" name="bemerkung" placeholder="Bemerkung" aria-label="bemerkung" aria-describedby="basic-addon1">
                 </div>
-
+                <div class="table-responsive col-sm-12 col-lg-4">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row">Literpreis</th>
+                                <td id="literPreis"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">gefahrene km</th>
+                                <td id="gefahreneKm"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Verbrauch/ 100 km</th>
+                                <td id="verbrauch"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <button type="reset" class="btn btn-md btn-primary mt-5" href="#" role="button">abbrechen</button>
                 <button type="submit" class="btn btn-md btn-primary mt-5" href="#" role="button">speichern</button>
             </form>
 
-            <table class="table mt-5">
-                <tbody>
-                    <tr>
-                        <th scope="row">Literpreis</th>
-                        <td>1,78 €</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">gefahrene km</th>
-                        <td>456</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Verbrauch/ 100 km</th>
-                        <td>8,1</td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </main>
 
