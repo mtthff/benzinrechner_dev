@@ -1,3 +1,21 @@
+<?php
+ini_set('display_errors', 'On');
+error_reporting(E_ALL); # & ~E_NOTICE & ~E_WARNING);
+
+require_once 'connect.php';
+
+// Maxmimaler kmStand aus Datenbank auslesen
+$sqlMax_kmStand = 'SELECT MAX(kmStand) AS max_kmStand FROM consumption;';
+$max_kmStand_handle = mysqli_query($link, $sqlMax_kmStand);
+$dataMax_kmStand = mysqli_fetch_assoc($max_kmStand_handle);
+
+// $data = array("max_kmStand" => $dataMax_kmStand['max_kmStand']);
+// $json_data = json_encode($data); // Daten in JSON umwandeln
+
+// $file = 'assets/data/data_max_km_stand.json';
+// file_put_contents($file, $json_data); // JSON-Daten in eine Datei schreiben
+
+?>
 <!doctype html>
 <html lang="de" data-bs-theme="auto">
 
@@ -6,7 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Matthias Hoffmann">
-    <title>Benzinrechner · v24.6</title>
+    <title>Benzinrechner · v0.24.6</title>
 
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
@@ -51,7 +69,7 @@
                     <span class="input-group-text" id="text">Bemerkung</span>
                     <input type="text" class="form-control" name="bemerkung" placeholder="Bemerkung" aria-label="bemerkung" aria-describedby="basic-addon1">
                 </div>
-                <div class="table-responsive col-sm-12 col-lg-4">
+                <div class="table-responsive col-sm-12 col-lg-5">
                     <table class="table">
                         <tbody>
                             <tr>
@@ -107,6 +125,9 @@
     </nav>
 
     <script src="assets/js/frameworks/bootstrap.min.js"></script>
+    <script>
+        kmStandAlt = <?php echo $dataMax_kmStand['max_kmStand']; ?>
+    </script>
     <script src="assets/js/main.js"></script>
 
 </body>

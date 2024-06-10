@@ -10,15 +10,17 @@ let betrag = document.querySelector('[name="betrag"]');
 
 kmStand.addEventListener('change', function () {
     kmStandValue = this.value;
-    if (literValue !== '') {
-        console.log('kmStand:', kmStandValue, 'liter:', literValue);
-    }
+    let gefahreneKm = kmStandValue - kmStandAlt;
+    let td_gefahreneKm = document.querySelector('#gefahreneKm');
+    td_gefahreneKm.innerHTML = gefahreneKm + ' km';
+    // if (literValue !== '') {
+    //     console.log('kmStand:', kmStandValue, 'liter:', literValue);
+    // }
 });
 
 liter.addEventListener('change', function () {
     literValue = this.value;
     if (kmStandValue !== '') {
-        console.log('kmStand:', kmStandValue, 'liter:', literValue);
     }
 });
 
@@ -29,6 +31,16 @@ betrag.addEventListener('change', function () {
         let roundedResult = parseFloat(divisionResult.toFixed(2));
         let tdLiterpreis = document.querySelector('#literPreis');
         tdLiterpreis.innerHTML = roundedResult + ' €';
+        
+        let tdElement = document.querySelector('#gefahreneKm');
+        let gefahreneKmText = tdElement.innerHTML;
+        // Entfernen Sie die letzten 3 Zeichen (" km")
+        let gefahreneKm = parseFloat(gefahreneKmText.slice(0, -3))
+        let temp = roundedResult/ (gefahreneKm / 100);
+        let roundedVerbrauch = temp.toFixed(2); // Rundet das Ergebnis auf zwei Nachkommastellen
+        // console.log(roundedTemp);
+        let tdVerbrauch = document.querySelector('#verbrauch');
+        tdVerbrauch.innerHTML = roundedVerbrauch + ' l / 100 km';
     }
 });
 
