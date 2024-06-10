@@ -36,11 +36,12 @@ betrag.addEventListener('change', function () {
         let gefahreneKmText = tdElement.innerHTML;
         // Entfernen Sie die letzten 3 Zeichen (" km")
         let gefahreneKm = parseFloat(gefahreneKmText.slice(0, -3))
-        let temp = roundedResult/ (gefahreneKm / 100);
+        let temp = literValue/ (gefahreneKm / 100);
+        // let roundedVerbrauch = Math.round(literValue/ (gefahreneKm / 100));
         let roundedVerbrauch = temp.toFixed(2); // Rundet das Ergebnis auf zwei Nachkommastellen
         // console.log(roundedTemp);
         let tdVerbrauch = document.querySelector('#verbrauch');
-        tdVerbrauch.innerHTML = roundedVerbrauch + ' l / 100 km';
+        tdVerbrauch.innerHTML = roundedVerbrauch + ' l';
     }
 });
 

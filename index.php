@@ -55,7 +55,7 @@ $dataMax_kmStand = mysqli_fetch_assoc($max_kmStand_handle);
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">km-Stand</span>
-                    <input type="number" class="form-control" name="kmStand" aria-label="kmStand" step="0.01" required>
+                    <input type="number" class="form-control" name="kmStand" aria-label="kmStand" step="1" required>
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">Liter</span>
