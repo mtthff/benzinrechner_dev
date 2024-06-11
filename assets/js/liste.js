@@ -23,6 +23,7 @@ editIcon.forEach(function (element) {
             document.querySelector('#kmStand').value = result.kmStand;
             document.querySelector('#liter').value = result.liter;
             document.querySelector('#preis').value = result.preis;
+            let vollgetankt = (result.vollgetankt === 'ja') ? document.querySelector('#vollgetankt').checked = true : document.querySelector('#vollgetankt').checked = false ;
             document.querySelector('#bemerkung').value = result.bemerkung;
             myModal.show();
         }

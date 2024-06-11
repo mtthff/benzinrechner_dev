@@ -151,6 +151,12 @@ array_shift($dataConsumption);
                             <span class="input-group-text">€</span>
                             <input type="number" class="form-control" name="preis" id="preis" aria-label="preis" step="0.01" required>
                         </div>
+                        <div class="input-group mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="ja" name="vollgetankt" id="vollgetankt">
+                                <label class="form-check-label" for="vollgetankt">vollgetankt</label>
+                            </div>
+                        </div>
                         <div class="input-group mt-4 mb-3">
                             <span class="input-group-text">Bemerkung</span>
                             <input type="text" class="form-control" name="bemerkung" id="bemerkung" placeholder="Bemerkung" aria-label="bemerkung" aria-describedby="basic-addon1">

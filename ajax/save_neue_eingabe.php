@@ -20,15 +20,17 @@ require_once '../connect.php';
 
 // echo "<pre>";
 // print_r($_POST);
+// exit;
 
 // POST
 //------
 // [vehicle_id] => 1
-// [datum] => 2024-06-04
-// [kmStand] => 184012
-// [liter] => 23.06
-// [betrag] => 76.99
-// [bemerkung] => neue Eintrag
+// [datum] => 2024-06-05
+// [kmStand] => 123
+// [liter] => 142
+// [betrag] => 1
+// [vollgetankt] => ja
+// [bemerkung] => 
 
 
 $vehicle_id = mysqli_real_escape_string($link, $_POST['vehicle_id']);
@@ -36,11 +38,12 @@ $datum = mysqli_real_escape_string($link, $_POST['datum']);
 $km_stand = mysqli_real_escape_string($link, $_POST['kmStand']);
 $liter = mysqli_real_escape_string($link, $_POST['liter']);
 $betrag = mysqli_real_escape_string($link, $_POST['betrag']);
-$bemerkung = mysqli_real_escape_string($link, $_POST['bemerkung']);
 $betrag = str_replace(',', '.', $betrag);
+$vollgetankt = isset($_POST['vollgetankt']) ? 'ja' : 'nein';
+$bemerkung = mysqli_real_escape_string($link, $_POST['bemerkung']);
 
-$query = "INSERT INTO `consumption` (`id`, `vehicle_id`, `datum`, `kmStand`, `liter`, `preis`, `bemerkung`) 
-              VALUES ('', '$vehicle_id', '$datum', '$km_stand', '$liter', '$betrag', '$bemerkung');";
+$query = "INSERT INTO `consumption` (`id`, `vehicle_id`, `datum`, `kmStand`, `liter`, `preis`, `vollgetankt`, `bemerkung`) 
+              VALUES ('', '$vehicle_id', '$datum', '$km_stand', '$liter', '$betrag', '$vollgetankt', '$bemerkung');";
 
 // die($query);
 

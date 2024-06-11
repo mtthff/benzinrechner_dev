@@ -23,6 +23,7 @@ $row = mysqli_fetch_assoc($result);
 // [kmStand] => 183775
 // [liter] => 48.33
 // [preis] => 87.43
+// [volgetankt] => ja
 // [bemerkung] => Leipzig
 
 echo json_encode($row);

@@ -10,13 +10,13 @@ require_once '../connect.php';
 
 // POST
 //------
-// [id] => 12
-// [datum] => 2024-05-29
-// [kmStand] => 183775
-// [liter] => 48.33
-// [preis] => 87.43
-// [bemerkung] => Leipzig
-
+// [id] => 22
+// [datum] => 2024-06-06
+// [kmStand] => 184437
+// [liter] => 34.7
+// [preis] => 60.00
+// [vollgetankt] => ja
+// [bemerkung] => Heimfahrt von Leipzig 
 
 $id = mysqli_real_escape_string($link, $_POST['id']);
 $datum = mysqli_real_escape_string($link, $_POST['datum']);
@@ -25,6 +25,7 @@ $liter = mysqli_real_escape_string($link, $_POST['liter']);
 $liter = str_replace(',', '.', $liter);
 $preis = mysqli_real_escape_string($link, $_POST['preis']);
 $preis = str_replace(',', '.', $preis);
+$vollgetankt = isset($_POST['vollgetankt']) ? 'ja' : 'nein';
 $bemerkung = mysqli_real_escape_string($link, $_POST['bemerkung']);
 
 $query = "UPDATE `consumption` SET 
@@ -32,6 +33,7 @@ $query = "UPDATE `consumption` SET
             `kmStand` = '$km_stand', 
             `liter` = '$liter', 
             `preis` = '$preis', 
+            `vollgetankt` = '$vollgetankt', 
             `bemerkung` = '$bemerkung' 
         WHERE `consumption`.`id` = $id"; 
 
