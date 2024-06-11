@@ -1,47 +1,42 @@
 "use strict";
 
-let kmStandValue = '';
 let literValue = '';
-let betragValue = '';
 
 let kmStand = document.querySelector('[name="kmStand"]');
 let liter = document.querySelector('[name="liter"]');
 let betrag = document.querySelector('[name="betrag"]');
 
 kmStand.addEventListener('change', function () {
-    kmStandValue = this.value;
+    let kmStandValue = this.value;
+
+    // tatsächlich gefahrene KM ausrechnen
+    // kmStandAlt wird per php in index.php übergeben
     let gefahreneKm = kmStandValue - kmStandAlt;
     let td_gefahreneKm = document.querySelector('#gefahreneKm');
+   
     td_gefahreneKm.innerHTML = gefahreneKm + ' km';
-    // if (literValue !== '') {
-    //     console.log('kmStand:', kmStandValue, 'liter:', literValue);
-    // }
+    td_gefahreneKm.setAttribute('data-verbrauch', gefahreneKm); //wird unten bei verbrauch benötigt und vereinfacht die Sache
 });
 
 liter.addEventListener('change', function () {
     literValue = this.value;
-    if (kmStandValue !== '') {
-    }
 });
 
 betrag.addEventListener('change', function () {
-    betragValue = this.value;
+    let betragValue = this.value;
     if (literValue !== '') {
-        let divisionResult = betragValue / literValue;
-        let roundedResult = parseFloat(divisionResult.toFixed(2));
-        let tdLiterpreis = document.querySelector('#literPreis');
-        tdLiterpreis.innerHTML = roundedResult + ' €';
+
+        // Literpreis ausrechen
+        let roundedLiterPreis = parseFloat((betragValue / literValue).toFixed(2));
+        document.querySelector('#literPreis').innerHTML = roundedLiterPreis + ' €';
         
-        let tdElement = document.querySelector('#gefahreneKm');
-        let gefahreneKmText = tdElement.innerHTML;
-        // Entfernen Sie die letzten 3 Zeichen (" km")
-        let gefahreneKm = parseFloat(gefahreneKmText.slice(0, -3))
-        let temp = literValue/ (gefahreneKm / 100);
-        // let roundedVerbrauch = Math.round(literValue/ (gefahreneKm / 100));
-        let roundedVerbrauch = temp.toFixed(2); // Rundet das Ergebnis auf zwei Nachkommastellen
-        // console.log(roundedTemp);
-        let tdVerbrauch = document.querySelector('#verbrauch');
-        tdVerbrauch.innerHTML = roundedVerbrauch + ' l';
+        // oben berechnete gefahrene KM holen
+        let gefahreneKm = document.querySelector('#gefahreneKm').getAttribute('data-verbrauch');
+
+        // Verbrauch ausrechnen und auf zwei Kommastellen runden
+        let roundedVerbrauch = (literValue / (gefahreneKm / 100)).toFixed(2); 
+        
+        document.querySelector('#verbrauch').innerHTML = roundedVerbrauch + ' l';
     }
 });
 
