@@ -77,7 +77,7 @@ array_shift($dataConsumption);
 
     <!-- Tabelle -->
     <main class="container">
-        <div class="bg-body-tertiary p-3 rounded mt-3 mb-5">
+        <div class="bg-body-tertiary pt-1 px-3 pb-5 rounded mt-3 mb-5">
             <div class="my-3 row">
                 <span class="h1 col">Liste</span>
             </div>
@@ -112,7 +112,7 @@ array_shift($dataConsumption);
                                 <td><?php echo ($value['gefahreneKm'] != '-') ? $value['gefahreneKm'] . ' km' : '-' ?></td>
                                 <td><?php echo ($value['verbrauch'] != '-') ? $value['verbrauch'] . ' l' : '-' ?></td>
                                 <td><?php echo $value['bemerkung'] ?></td>
-                                <td><img class="editEintrag" data-id="<?php echo $value['id'] ?>" src="assets/img/rule_settings_24dp.svg" alt="edit"></td>
+                                <td><img class="editEintrag" data-id="<?php echo $value['id'] ?>" src="assets/img/edit_24dp.svg" alt="edit"></td>
                             </tr>
                         <?php
                             prev($dataConsumption); // Bewegt den Zeiger auf das vorherige Element
@@ -173,7 +173,7 @@ array_shift($dataConsumption);
 
 
     <!-- Navigation -->
-    <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-primary">
+    <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-secondary">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -193,7 +193,7 @@ array_shift($dataConsumption);
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link" href="admin.php">
-                            <img src="assets/img/manufacturing_48db.svg" alt="Suche">
+                            <img src="assets/img/manufacturing_48dp.svg" alt="Suche">
                         </a>
                     </li>
                 </ul>

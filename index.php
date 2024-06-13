@@ -29,17 +29,13 @@ $dataMax_kmStand = mysqli_fetch_assoc($max_kmStand_handle);
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
     <!-- <meta name="theme-color" content="#712cf9"> -->
-    <style>
-
-
-    </style>
 
 </head>
 
 <body>
 
     <main class="container">
-        <div class="bg-body-tertiary p-5 rounded mt-3">
+        <div class="bg-body-tertiary px-3 rounded mt-3">
 
             <form action="ajax/save_neue_eingabe.php" method="post">
                 <div class="my-3 row">
@@ -71,10 +67,6 @@ $dataMax_kmStand = mysqli_fetch_assoc($max_kmStand_handle);
                         <label class="form-check-label" for="vollgetankt">vollgetankt</label>
                     </div>
                 </div>
-                <div class="input-group mt-4 mb-3">
-                    <span class="input-group-text" id="text">Bemerkung</span>
-                    <input type="text" class="form-control" name="bemerkung" placeholder="Bemerkung" aria-label="bemerkung" aria-describedby="basic-addon1">
-                </div>
                 <div class="table-responsive col-sm-12 col-lg-5">
                     <table class="table">
                         <tbody>
@@ -93,8 +85,12 @@ $dataMax_kmStand = mysqli_fetch_assoc($max_kmStand_handle);
                         </tbody>
                     </table>
                 </div>
-                <button type="reset" class="btn btn-md btn-primary mt-5" href="#" role="button">abbrechen</button>
-                <button type="submit" class="btn btn-md btn-primary mt-5" href="#" role="button">speichern</button>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="text">Bemerkung</span>
+                    <input type="text" class="form-control" name="bemerkung" placeholder="Bemerkung" aria-label="bemerkung" aria-describedby="basic-addon1">
+                </div>
+                <button type="reset" class="btn btn-md btn-primary mb-5" href="#" role="button">abbrechen</button>
+                <button type="submit" class="btn btn-md btn-primary mb-5" href="#" role="button">speichern</button>
             </form>
 
         </div>
@@ -102,7 +98,7 @@ $dataMax_kmStand = mysqli_fetch_assoc($max_kmStand_handle);
 
 
 
-    <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-primary">
+    <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-secondary">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -122,7 +118,7 @@ $dataMax_kmStand = mysqli_fetch_assoc($max_kmStand_handle);
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link" href="admin.php">
-                            <img src="assets/img/manufacturing_48db.svg" alt="Suche">
+                            <img src="assets/img/manufacturing_48dp.svg" alt="Suche">
                         </a>
                     </li>
                 </ul>

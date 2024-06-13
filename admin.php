@@ -10,7 +10,7 @@
 
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
-    <!-- <meta name="theme-color" content="#712cf9"> -->
+    <meta name="theme-color" content="#712cf9">
     <style>
 
 
@@ -21,7 +21,7 @@
 <body>
 
     <main class="container">
-        <div class="bg-body-tertiary p-5 rounded mt-3">
+        <div class="bg-body-tertiary pt-1 px-3 pb-5 rounded mt-3">
             <div class="my-3 row">
                 <span class="h1 col">Admin</span>
             </div>
@@ -31,7 +31,7 @@
 
 
 
-    <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-primary">
+    <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-secondary">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -51,7 +51,7 @@
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link" href="#">
-                            <img src="assets/img/manufacturing_48db.svg" alt="Suche">
+                            <img src="assets/img/manufacturing_48dp.svg" alt="Suche">
                         </a>
                     </li>
                 </ul>
