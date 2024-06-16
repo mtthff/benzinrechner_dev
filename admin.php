@@ -10,7 +10,7 @@
 
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
-    <meta name="theme-color" content="#712cf9">
+    <!-- <meta name="theme-color" content="#712cf9"> -->
     <style>
 
 
@@ -23,7 +23,26 @@
     <main class="container">
         <div class="bg-body-tertiary pt-1 px-3 pb-5 rounded mt-3">
             <div class="my-3 row">
-                <span class="h1 col">Admin</span>
+                    <h1 class="col">Admin</h1>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary float-end" id="newVehicle">Neues Auto</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive mb-3">
+                    <table class="table">
+                        <thead>
+                            <tr class="table-info">
+                                <th scope="col">id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Kennzeichen</th>
+                                <th scope="col">Kilometerstand</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="listeKategorien"></tbody>
+                    </table>
+                </div>
             </div>
 
         </div>
