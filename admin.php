@@ -1,3 +1,27 @@
+<?php
+ini_set('display_errors', 'On');
+error_reporting(E_ALL); # & ~E_NOTICE & ~E_WARNING);
+
+require_once 'connect.php';
+
+$dataVehicle = array();
+$sqlVehicle = 'SELECT * FROM `vehicle` ORDER BY id ASC';
+$resultVehicle = mysqli_query($link, $sqlVehicle);
+while ($rowVehicle = mysqli_fetch_assoc($resultVehicle)) {
+    $dataVehicle[] = $rowVehicle; // Fügt jeden Datensatz zum Array hinzu
+}
+// echo "<pre>";
+// print_r($dataVehicle);
+// exit;
+// [id] => 1
+// [name] => Zafira
+// [kennzeichen] => S-RF 2822
+// [kmStand] => 143874
+// [datum] => 2019-04-12
+
+
+?>
+
 <!doctype html>
 <html lang="de" data-bs-theme="auto">
 
@@ -11,10 +35,6 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
     <!-- <meta name="theme-color" content="#712cf9"> -->
-    <style>
-
-
-    </style>
 
 </head>
 
@@ -23,32 +43,86 @@
     <main class="container">
         <div class="bg-body-tertiary pt-1 px-3 pb-5 rounded mt-3">
             <div class="my-3 row">
-                    <h1 class="col">Admin</h1>
-                    <div class="col">
-                        <button type="button" class="btn btn-primary float-end" id="newVehicle">Neues Auto</button>
-                    </div>
-                </div>
-
-                <div class="table-responsive mb-3">
-                    <table class="table">
-                        <thead>
-                            <tr class="table-info">
-                                <th scope="col">id</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Kennzeichen</th>
-                                <th scope="col">Kilometerstand</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="listeKategorien"></tbody>
-                    </table>
+                <h1 class="col">Admin</h1>
+                <div class="col">
+                    <button type="button" class="btn btn-primary float-end" id="newVehicle">Neues Auto</button>
                 </div>
             </div>
 
+            <div class="table-responsive mb-3">
+                <table class="table">
+                    <thead>
+                        <tr class="table-info">
+                            <th scope="col">id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Kennzeichen</th>
+                            <th scope="col">Kilometerstand</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="listeKategorien">
+                        <?php
+                        foreach ($dataVehicle as $key => $value) {
+                            // [id] => 1
+                            // [name] => Zafira
+                            // [kennzeichen] => S-RF 2822
+                            // [kmStand] => 143874
+                            // [datum] => 2019-04-12
+                            echo <<<HTML
+                                <tr data-id="{$value['id']}">
+                                    <td>{$value['id']}</td>
+                                    <td>{$value['name']}</td>
+                                    <td>{$value['kennzeichen']}</td>
+                                    <td>{$value['kmStand']}</td>
+                                    <td><img src="assets/img/edit_24dp.svg" id="#editVehicle" data-id="{$value['id']}" alt="edit"></td>
+                                </tr>
+                            HTML;
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
     </main>
 
+    <!-- Modal -->
+    <div class="modal fade" id="vehicleModal" tabindex="-1" aria-labelledby="vehicleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="vehicleModalLabel">...</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" id="formVehicle">
+                    <input type="hidden" name="Idvehicle" id="IdVehicle">
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Name</span>
+                            <input type="text" class="form-control" name="name" id="name" autocomplete="off" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Kennzeichen</span>
+                            <input type="text" class="form-control" name="kennzeichen" id="kennzeichen" autocomplete="off" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">KM-Stand</span>
+                            <input type="text" class="form-control" name="kmStand" id="kmStand" autocomplete="off" required>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="deaktiviereVehicle" disabled>
+                            <label class="form-check-label" for="deaktiviereVehicle">Auto deaktivieren</label>
+                        </div>
 
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" id="deleteKategorie">Kategorie löschen</button>
+                            <button type="submit" class="btn btn-primary">Änderungen speichern</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-secondary">
         <div class="container-fluid">
@@ -79,7 +153,7 @@
     </nav>
 
     <script src="assets/js/frameworks/bootstrap.min.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/admin.js"></script>
 
 </body>
 
