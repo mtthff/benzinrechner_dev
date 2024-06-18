@@ -63,18 +63,13 @@ while ($rowVehicle = mysqli_fetch_assoc($resultVehicle)) {
                     <tbody id="listeKategorien">
                         <?php
                         foreach ($dataVehicle as $key => $value) {
-                            // [id] => 1
-                            // [name] => Zafira
-                            // [kennzeichen] => S-RF 2822
-                            // [kmStand] => 143874
-                            // [datum] => 2019-04-12
                             echo <<<HTML
                                 <tr data-id="{$value['id']}">
                                     <td>{$value['id']}</td>
                                     <td>{$value['name']}</td>
                                     <td>{$value['kennzeichen']}</td>
                                     <td>{$value['kmStand']}</td>
-                                    <td><img src="assets/img/edit_24dp.svg" id="#editVehicle" data-id="{$value['id']}" alt="edit"></td>
+                                    <td><img src="assets/img/edit_24dp.svg" id="editVehicle" data-id="{$value['id']}" alt="edit"></td>
                                 </tr>
                             HTML;
                         }
@@ -115,7 +110,7 @@ while ($rowVehicle = mysqli_fetch_assoc($resultVehicle)) {
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" id="deleteKategorie">Kategorie löschen</button>
+                            <button type="button" class="btn btn-danger" id="deleteVehicle" disabled>Auto löschen</button>
                             <button type="submit" class="btn btn-primary">Änderungen speichern</button>
                         </div>
                     </div>
