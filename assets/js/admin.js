@@ -22,7 +22,7 @@ editVehicle.addEventListener('click', async function () {
     if (response.ok) {
         let result = await response.json()
         // let result = await response.text()
-        console.log(result);
+        // console.log(result);
         // { "id": "1", "name": "Zaf...", "kennzeichen": "S-., ..22", "kmStand": "143874", "datum": "2019-04-12" }
     
         let myModal = new bootstrap.Modal(document.querySelector('#vehicleModal'));
@@ -31,6 +31,7 @@ editVehicle.addEventListener('click', async function () {
         document.querySelector('#name').value = result.name;
         document.querySelector('#kennzeichen').value = result.kennzeichen;
         document.querySelector('#kmStand').value = result.kmStand;
+        document.querySelector('#datum').value = result.datum;
         document.querySelector('#deaktiviereVehicle').disabled = false;
         // document.querySelector('#deleteVehicle').disabled = false;
         myModal.show();

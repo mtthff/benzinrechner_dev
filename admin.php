@@ -104,6 +104,10 @@ while ($rowVehicle = mysqli_fetch_assoc($resultVehicle)) {
                             <span class="input-group-text">KM-Stand</span>
                             <input type="text" class="form-control" name="kmStand" id="kmStand" autocomplete="off" required>
                         </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Startdatum</span>
+                            <input type="date" class="form-control" name="datum" id="datum" autocomplete="off" required>
+                        </div>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="deaktiviereVehicle" disabled>
                             <label class="form-check-label" for="deaktiviereVehicle">Auto deaktivieren</label>
