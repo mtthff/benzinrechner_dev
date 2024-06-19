@@ -9,7 +9,7 @@ buttonNewVehicle.addEventListener('click', () => {
     document.querySelector('#formVehicle').setAttribute('action', 'ajax/save_neues_vehicle.php');
     document.querySelector('#IdVehicle').disabled = true;
     document.querySelector('#deleteVehicle').style.display = 'none';
-    document.querySelector('#switchVehicleDeaktivieren').style.display = 'none';
+    document.querySelector('#switchVehicleAktiv').style.display = 'none';
     document.querySelector('#submitForm').innerHTML = 'Neues Auto speichern';
     myModal.show();
 })
@@ -31,7 +31,7 @@ editIcon.forEach((editVehicle) => {
             let result = await response.json()
             // let result = await response.text()
             // console.log(result);
-            // { "id": "1", "name": "Zaf...", "kennzeichen": "S-., ..22", "kmStand": "143874", "datum": "2019-04-12" }
+            // { id: "4", name: "namedes Autos", kennzeichen: "S-rf 22898", kmStand: "109201", datum: "2024-06-19", aktiv: "ja" }
 
             let myModal = new bootstrap.Modal(document.querySelector('#vehicleModal'));
             document.querySelector('#formVehicle').setAttribute('action', 'ajax/update_vehicle.php');
@@ -41,10 +41,12 @@ editIcon.forEach((editVehicle) => {
             document.querySelector('#kennzeichen').value = result.kennzeichen;
             document.querySelector('#kmStand').value = result.kmStand;
             document.querySelector('#datum').value = result.datum;
-            document.querySelector('#switchVehicleDeaktivieren').style.display = 'block';
-            document.querySelector('#deaktiviereVehicle').disabled = false;
+            document.querySelector('#vehicleAktiv').style.display = 'block';
+            document.querySelector('#vehicleAktiv').disabled = false;
             document.querySelector('#deleteVehicle').style.display = 'block';
             // document.querySelector('#deleteVehicle').disabled = false;
+            let checkboxAktiv = document.querySelector('#vehicleAktiv');
+            result.aktiv === 'ja' ? checkboxAktiv.checked = true : checkboxAktiv.checked = false;
             document.querySelector('#submitForm').innerHTML = 'Änderungen speichern';
 
             myModal.show();

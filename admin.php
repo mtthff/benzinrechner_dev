@@ -108,9 +108,9 @@ while ($rowVehicle = mysqli_fetch_assoc($resultVehicle)) {
                             <span class="input-group-text">Startdatum</span>
                             <input type="date" class="form-control" name="datum" id="datum" autocomplete="off" required>
                         </div>
-                        <div class="form-check form-switch" id="switchVehicleDeaktivieren">
-                            <input class="form-check-input" type="checkbox" role="switch" id="deaktiviereVehicle" disabled>
-                            <label class="form-check-label" for="deaktiviereVehicle">Auto deaktivieren</label>
+                        <div class="form-check form-switch" id="switchVehicleAktiv">
+                            <input class="form-check-input" type="checkbox" role="switch" name="aktiv" id="vehicleAktiv" disabled>
+                            <label class="form-check-label" for="vehicleAktiv">Auto deaktivieren</label>
                         </div>
 
                         <div class="modal-footer">
