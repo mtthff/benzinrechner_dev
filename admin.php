@@ -69,7 +69,7 @@ while ($rowVehicle = mysqli_fetch_assoc($resultVehicle)) {
                                     <td>{$value['name']}</td>
                                     <td>{$value['kennzeichen']}</td>
                                     <td>{$value['kmStand']}</td>
-                                    <td><img src="assets/img/edit_24dp.svg" id="editVehicle" data-id="{$value['id']}" alt="edit"></td>
+                                    <td><img src="assets/img/edit_24dp.svg" class="editVehicle" data-id="{$value['id']}" alt="edit"></td>
                                 </tr>
                             HTML;
                         }
@@ -90,7 +90,7 @@ while ($rowVehicle = mysqli_fetch_assoc($resultVehicle)) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="post" id="formVehicle">
-                    <input type="hidden" name="Idvehicle" id="IdVehicle">
+                    <input type="hidden" name="vehicle_id" id="IdVehicle">
                     <div class="modal-body">
                         <div class="input-group mb-3">
                             <span class="input-group-text">Name</span>
@@ -102,20 +102,20 @@ while ($rowVehicle = mysqli_fetch_assoc($resultVehicle)) {
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">KM-Stand</span>
-                            <input type="text" class="form-control" name="kmStand" id="kmStand" autocomplete="off" required>
+                            <input type="number" class="form-control" name="kmStand" id="kmStand" autocomplete="off" required>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Startdatum</span>
                             <input type="date" class="form-control" name="datum" id="datum" autocomplete="off" required>
                         </div>
-                        <div class="form-check form-switch">
+                        <div class="form-check form-switch" id="switchVehicleDeaktivieren">
                             <input class="form-check-input" type="checkbox" role="switch" id="deaktiviereVehicle" disabled>
                             <label class="form-check-label" for="deaktiviereVehicle">Auto deaktivieren</label>
                         </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" id="deleteVehicle" disabled>Auto löschen</button>
-                            <button type="submit" class="btn btn-primary">Änderungen speichern</button>
+                            <button type="submit" class="btn btn-primary" id="submitForm"></button>
                         </div>
                     </div>
                 </form>
