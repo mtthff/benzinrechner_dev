@@ -14,6 +14,30 @@ buttonNewVehicle.addEventListener('click', () => {
     myModal.show();
 })
 
+let buttonDeleteVehicle = document.querySelector('#deleteVehicle');
+buttonDeleteVehicle.addEventListener('click', async function () {
+    if (confirm('Soll dieses Auto wirklich gelöscht werden?')) {
+        let id = this.dataset.id;
+        // console.log(idEintrag);
+        let response = await fetch('ajax/delete_vehicle.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({ id }),
+        });
+
+        if (response.ok) {
+            location.reload();
+            // let result = await response.text()
+            // console.log(result);
+        }
+    } else {
+        location.reload();
+    }
+
+});
+
 let editIcon = document.querySelectorAll('.editVehicle');
 editIcon.forEach((editVehicle) => {
     editVehicle.addEventListener('click', async function () {
@@ -31,7 +55,7 @@ editIcon.forEach((editVehicle) => {
             let result = await response.json()
             // let result = await response.text()
             // console.log(result);
-            // { id: "4", name: "namedes Autos", kennzeichen: "S-rf 22898", kmStand: "109201", datum: "2024-06-19", aktiv: "ja" }
+            // { id: "1", name: "Zafira", kennzeichen: "S-RF 2822", kmStand: "143874", datum: "2019-04-12", aktiv: "ja", eintraege: "251" }
 
             let myModal = new bootstrap.Modal(document.querySelector('#vehicleModal'));
             document.querySelector('#formVehicle').setAttribute('action', 'ajax/update_vehicle.php');
@@ -43,13 +67,20 @@ editIcon.forEach((editVehicle) => {
             document.querySelector('#datum').value = result.datum;
             document.querySelector('#vehicleAktiv').style.display = 'block';
             document.querySelector('#vehicleAktiv').disabled = false;
-            document.querySelector('#deleteVehicle').style.display = 'block';
-            // document.querySelector('#deleteVehicle').disabled = false;
+            if (result.eintraege === null) {
+                document.querySelector('#deleteVehicle').style.display = 'block';
+                document.querySelector('#deleteVehicle').disabled = false;
+                document.querySelector('#deleteVehicle').setAttribute("data-id", result.id);
+            }else{
+                document.querySelector('#deleteVehicle').style.display = 'none';
+                document.querySelector('#deleteVehicle').disabled = true;
+            }
             let checkboxAktiv = document.querySelector('#vehicleAktiv');
             result.aktiv === 'ja' ? checkboxAktiv.checked = true : checkboxAktiv.checked = false;
             document.querySelector('#submitForm').innerHTML = 'Änderungen speichern';
 
             myModal.show();
+
         }
     });
 });

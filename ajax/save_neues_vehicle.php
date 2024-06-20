@@ -21,8 +21,8 @@ $kmStand = mysqli_real_escape_string($link, $_POST['kmStand']);
 $datum = mysqli_real_escape_string($link, $_POST['datum']);
 
 $query = "INSERT INTO `vehicle`
-              VALUES ('', '$name', '$kennzeichen', '$kmStand', '$datum');";
-
+              VALUES ('', '$name', '$kennzeichen', '$kmStand', '$datum', 'ja');";
+// INSERT INTO `vehicle` (`id`, `name`, `kennzeichen`, `kmStand`, `datum`, `aktiv`) VALUES (NULL, 'Volvo', 'xyz', '987', '2024-06-27', 'ja'); 
 // die($query);
 $send = mysqli_query($link, $query);
 

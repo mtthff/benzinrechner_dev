@@ -63,8 +63,9 @@ while ($rowVehicle = mysqli_fetch_assoc($resultVehicle)) {
                     <tbody id="listeKategorien">
                         <?php
                         foreach ($dataVehicle as $key => $value) {
+                            $value['aktiv'] == 'nein' ? $class = 'table-secondary' : $class = '';
                             echo <<<HTML
-                                <tr data-id="{$value['id']}">
+                                <tr data-id="{$value['id']}" class="{$class}">
                                     <td>{$value['id']}</td>
                                     <td>{$value['name']}</td>
                                     <td>{$value['kennzeichen']}</td>
@@ -110,7 +111,7 @@ while ($rowVehicle = mysqli_fetch_assoc($resultVehicle)) {
                         </div>
                         <div class="form-check form-switch" id="switchVehicleAktiv">
                             <input class="form-check-input" type="checkbox" role="switch" name="aktiv" id="vehicleAktiv" disabled>
-                            <label class="form-check-label" for="vehicleAktiv">Auto deaktivieren</label>
+                            <label class="form-check-label" for="vehicleAktiv">Auto aktiv</label>
                         </div>
 
                         <div class="modal-footer">

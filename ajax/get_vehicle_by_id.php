@@ -17,8 +17,12 @@ $dataArray = json_decode($postjson, true);
 // [datum] => 2019-04-12
 
 //  date_format(datum, '%d.%m.%Y') as datum
-$sql = "SELECT * FROM `vehicle` WHERE `id` = ".$dataArray['idVehicle']." ORDER BY datum DESC";
-
+// $sql = "SELECT * FROM `vehicle` WHERE `id` = ".$dataArray['idVehicle']." ORDER BY datum DESC";
+$sql = "SELECT vehicle.*, SUM(consumption.id) AS eintraege
+        FROM vehicle
+        LEFT JOIN consumption ON vehicle.id = consumption.vehicle_id
+        WHERE vehicle.id = " . $dataArray['idVehicle'] . "
+        GROUP BY vehicle.id;";
 // echo $sql;
 // exit;
 
