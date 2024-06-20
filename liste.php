@@ -4,57 +4,68 @@ error_reporting(E_ALL); # & ~E_NOTICE & ~E_WARNING);
 
 require_once 'connect.php';
 
-$sqlVehicle = 'SELECT * FROM `vehicle` ORDER BY datum ASC';
-$resultVehicle = mysqli_query($link, $sqlVehicle);
-$dataVehicle = mysqli_fetch_assoc($resultVehicle);
-// echo "<pre>";
-// print_r($dataVehicle);
-// exit;
-//     [id] => 1
-//     [name] => Zafira
-//     [kennzeichen] => S-RF 2822
-//     [kmStand] => 143874
-//     [datum] => 2019-04-12
+// Prüfen, ob es mehr als ein aktives Fahrzeug gibt
+$sqlNumVehicle = 'SELECT COUNT(*) as num_rows, id FROM `vehicle` WHERE `aktiv` = "ja"';
+$resultNumVehicle = mysqli_query($link, $sqlNumVehicle);
+$numVehicle = mysqli_fetch_assoc($resultNumVehicle);
+// wenn nur ein Aktives Fahrzeug, wird dieses als default gesetzt
+$numVehicle['num_rows'] == 1 ? $_GET['id'] = $numVehicle['id'] : null;
 
+if (isset($_GET['id'])) {
+    $id = mysqli_real_escape_string($link, $_GET['id']);
 
-$sql = "SELECT * FROM consumption ORDER BY datum ASC";
-$result = mysqli_query($link, $sql);
+    $sqlVehicle = 'SELECT * FROM `vehicle` WHERE `id` = ' . $id . ' ORDER BY datum ASC';
+    $resultVehicle = mysqli_query($link, $sqlVehicle);
+    $dataVehicle = mysqli_fetch_assoc($resultVehicle);
+    // echo "<pre>";
+    // print_r($dataVehicle);
+    // exit;
 
-$dataConsumption[] = array(
-    'id' => '',
-    'datum' => '',
-    'kmStand' => $dataVehicle['kmStand'],
-    'liter' => '',
-    'preis' => '',
-    'literPreis' => '',
-    'gefahreneKm' => 1,
-    'verbrauch' => '',
-    'bemerkung' => ''
-);
-$lastKey = array_key_last($dataConsumption);
+    $sql = 'SELECT * FROM `consumption` WHERE `vehicle_id` = ' . $id . ' ORDER BY datum ASC';
+    // die($sql);
+    $result = mysqli_query($link, $sql);
 
-while ($row = mysqli_fetch_assoc($result)) {
     $dataConsumption[] = array(
-        'id' => $row['id'],
-        'datum' => $row['datum'],
-        'kmStand' => $row['kmStand'],
-        'liter' => $row['liter'],
-        'preis' => $row['preis'],
-        'literPreis' => round($row['preis'] / $row['liter'], 2),
-        'gefahreneKm' => $row['kmStand'] - $dataConsumption[$lastKey]['kmStand'],
-        'verbrauch' => round($row['liter'] / (($row['kmStand'] - $dataConsumption[$lastKey]['kmStand']) / 100), 2),
-        'bemerkung' => $row['bemerkung']
+        'id' => '',
+        'datum' => '',
+        'kmStand' => $dataVehicle['kmStand'],
+        'liter' => '',
+        'preis' => '',
+        'literPreis' => '',
+        'gefahreneKm' => 1,
+        'verbrauch' => '',
+        'bemerkung' => ''
     );
     $lastKey = array_key_last($dataConsumption);
-    if ($dataConsumption[$lastKey]['gefahreneKm'] > 1000 or $dataConsumption[$lastKey]['gefahreneKm'] < 0) {
-        $dataConsumption[$lastKey]['gefahreneKm'] = '-';
-        $dataConsumption[$lastKey]['verbrauch'] = '-';
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $dataConsumption[] = array(
+            'id' => $row['id'],
+            'datum' => $row['datum'],
+            'kmStand' => $row['kmStand'],
+            'liter' => $row['liter'],
+            'preis' => $row['preis'],
+            'literPreis' => round($row['preis'] / $row['liter'], 2),
+            'gefahreneKm' => $row['kmStand'] - $dataConsumption[$lastKey]['kmStand'],
+            'verbrauch' => round($row['liter'] / (($row['kmStand'] - $dataConsumption[$lastKey]['kmStand']) / 100), 2),
+            'bemerkung' => $row['bemerkung']
+        );
+        $lastKey = array_key_last($dataConsumption);
+        if ($dataConsumption[$lastKey]['gefahreneKm'] > 1000 or $dataConsumption[$lastKey]['gefahreneKm'] < 0) {
+            $dataConsumption[$lastKey]['gefahreneKm'] = '-';
+            $dataConsumption[$lastKey]['verbrauch'] = '-';
+        }
     }
+    array_shift($dataConsumption);
+    // echo "<pre>";
+    // print_r($dataConsumption);
+    // exit;
+    $triggerFunction = false; // Setzen Sie die Variable auf true, um ganz unten Javascriptvariable zu setzen
+} else {
+    $id = 1;
+    $dataConsumption = array();
+    $triggerFunction = true; // Setzen Sie die Variable auf true, um ganz unten Javascriptvariable zu setzen
 }
-array_shift($dataConsumption);
-// echo "<pre>";
-// print_r($dataConsumption);
-// exit;
 
 ?>
 <!doctype html>
@@ -65,12 +76,9 @@ array_shift($dataConsumption);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Matthias Hoffmann">
-    <title>Haushaltsbuch · v24.5 (template)</title>
-
+    <title>Benzinrechner · v0.24.6</title>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
-    <!-- <meta name="theme-color" content="#712cf9"> -->
-
 </head>
 
 <body>
@@ -80,6 +88,9 @@ array_shift($dataConsumption);
         <div class="bg-body-tertiary pt-1 px-3 pb-5 rounded mt-3 mb-5">
             <div class="my-3 row">
                 <span class="h1 col">Liste</span>
+                <select class="form-select col" aria-label="Default select selectAuto" name="vehicle_id" id="vehicle">
+                    <option selected disabled value="">Bitte Fahrzeug wählen</option>
+                </select>
             </div>
             <div class="table-responsive">
                 <table class="table">
@@ -202,6 +213,7 @@ array_shift($dataConsumption);
     </nav>
 
     <script src="assets/js/frameworks/bootstrap.min.js"></script>
+    <script>let triggerFunction = <?php echo json_encode($triggerFunction); ?>;</script>
     <script src="assets/js/liste.js"></script>
 </body>
 

@@ -1,5 +1,34 @@
 "use strict";
 
+// Select Optionen für Fahrzeugauswahl einlesen
+window.onload = async function () {
+    let response = await fetch('ajax/get_vehicle.php');
+
+    let result = await response.json();
+    // let result = await response.text();
+    // console.log(result);
+    // "id": "1", "name": "Zafira", "kennzeichen": "S-RF 2822", "kmStand": "143874", "datum": "2019-04-12", "aktiv": "ja"}
+
+    const selectElement = document.querySelector('#vehicle');
+    result.forEach(function (element) {
+        let option = document.createElement('option');
+        option.value = element.id;
+        option.textContent = element.name + ' · ' + element.kennzeichen;
+        selectElement.appendChild(option);
+    });
+}
+
+if (triggerFunction) {
+    console.log(triggerFunction);
+    alert ('Bitte Fahrzeug auswählen!');
+}
+
+document.querySelector('#vehicle').addEventListener('change', function(){
+    let id = this.value;
+    window.location = 'liste.php?id=' + id;
+})
+
+// Eintrag editieren
 let editIcon = document.querySelectorAll('.editEintrag');
 editIcon.forEach(function (element) {
     element.addEventListener('click', async function () {
