@@ -1,7 +1,25 @@
 "use strict";
 
-let literValue = '';
+// Select Optionen für Fahrzeugauswahl einlesen
+window.onload = async function () {
+    let response = await fetch('ajax/get_vehicle.php');
 
+    let result = await response.json();
+    // let result = await response.text();
+    // console.log(result);
+    // "id": "1", "name": "Zafira", "kennzeichen": "S-RF 2822", "kmStand": "143874", "datum": "2019-04-12", "aktiv": "ja"}
+
+    const selectElement = document.querySelector('#vehicle');
+    result.forEach(function (element) {
+        let option = document.createElement('option');
+        option.value = element.id;
+        option.textContent = element.name + ' · ' + element.kennzeichen;
+        selectElement.appendChild(option);
+    });
+}
+
+// Zwischenergebnisse bei Dateneingabe ausrechnen
+let literValue = '';
 let kmStand = document.querySelector('[name="kmStand"]');
 let liter = document.querySelector('[name="liter"]');
 let betrag = document.querySelector('[name="betrag"]');
@@ -39,20 +57,3 @@ betrag.addEventListener('change', function () {
         document.querySelector('#verbrauch').innerHTML = roundedVerbrauch + ' l';
     }
 });
-
-window.onload = async function () {
-    let response = await fetch('ajax/get_vehicle.php');
-
-    let result = await response.json();
-    // let result = await response.text();
-    // console.log(result);
-    // "id": "1", "name": "Zafira", "kennzeichen": "S-RF 2822", "kmStand": "143874", "datum": "2019-04-12", "aktiv": "ja"}
-
-    const selectElement = document.querySelector('#vehicle');
-    result.forEach(function (element) {
-        let option = document.createElement('option');
-        option.value = element.id;
-        option.textContent = element.name + ' · ' + element.kennzeichen;
-        selectElement.appendChild(option);
-    });
-}
