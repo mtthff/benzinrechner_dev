@@ -40,8 +40,8 @@ $dataMax_kmStand = mysqli_fetch_assoc($max_kmStand_handle);
             <form action="ajax/save_neue_eingabe.php" method="post">
                 <div class="my-3 row">
                     <span class="h1 col">Benzinrechner</span>
-                    <select class="form-select col" aria-label="Default select selectAuto" name="vehicle_id" id="vehicle_id">
-                        <option value="1" selected>Zafira · S-RF 2822</option>
+                    <select class="form-select col" aria-label="Default select selectAuto" name="vehicle_id" id="vehicle">
+                        <option selected disabled value="">Bitte Fahrzeug wählen</option>
                     </select>
                 </div>
 
