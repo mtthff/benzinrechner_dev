@@ -28,8 +28,7 @@ $dataMax_kmStand = mysqli_fetch_assoc($max_kmStand_handle);
 
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
-    <!-- <meta name="theme-color" content="#712cf9"> -->
-
+    <link rel="manifest" href="manifest.json" crossorigin="use-credentials">
 </head>
 
 <body>
