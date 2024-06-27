@@ -1,0 +1,50 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+CREATE DATABASE IF NOT EXISTS `petrolcalculator` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `petrolcalculator`;
+
+CREATE TABLE `consumption` (
+  `id` int(11) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  `datum` date DEFAULT NULL,
+  `kmStand` float DEFAULT NULL,
+  `liter` decimal(5,2) DEFAULT NULL,
+  `preis` decimal(6,2) DEFAULT NULL,
+  `vollgetankt` enum('ja','nein') NOT NULL DEFAULT 'ja',
+  `bemerkung` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `vehicle` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `kennzeichen` varchar(255) DEFAULT NULL,
+  `kmStand` int(11) DEFAULT NULL,
+  `datum` date DEFAULT NULL,
+  `aktiv` enum('ja','nein') NOT NULL DEFAULT 'ja'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+ALTER TABLE `consumption`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `vehicle`
+  ADD PRIMARY KEY (`id`);
+
+
+ALTER TABLE `consumption`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `vehicle`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
