@@ -10,11 +10,16 @@ window.onload = async function () {
     // "id": "1", "name": "Zafira", "kennzeichen": "S-RF 2822", "kmStand": "143874", "datum": "2019-04-12", "aktiv": "ja"}
 
     const selectElement = document.querySelector('#vehicle');
+    console.log(result.length);
     result.forEach(function (element) {
         let option = document.createElement('option');
         option.value = element.id;
         option.textContent = element.name + ' · ' + element.kennzeichen;
         selectElement.appendChild(option);
+        if (result.length === 1){
+            // wenn nur ein Auto aktiv, wird diese eine Option im Select-Feld automatisch gesetzt 
+            selectElement.value = element.id;
+        }
     });
 }
 

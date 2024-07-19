@@ -39,7 +39,7 @@ $dataMax_kmStand = mysqli_fetch_assoc($max_kmStand_handle);
             <form action="ajax/save_neue_eingabe.php" method="post">
                 <div class="my-3 row">
                     <span class="h1 col">Benzinrechner</span>
-                    <select class="form-select col" aria-label="Default select selectAuto" name="vehicle_id" id="vehicle">
+                    <select class="form-select col" aria-label="Default select selectAuto" name="vehicle_id" id="vehicle" required>
                         <option selected disabled value="">Bitte Fahrzeug wählen</option>
                     </select>
                 </div>
